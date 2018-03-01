@@ -12,10 +12,12 @@
 #include <event2/keyvalq_struct.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
+#include <uuid/uuid.h>
 
 #define OBO_TABLE_USER "OBO_TABLE_USER"
 
 #define RESPONSE_DATA_LEN 4096
+#define SESSION_ID_LEN 256
 
 typedef struct response_data{
 	char data[RESPONSE_DATA_LEN];
@@ -26,5 +28,8 @@ void login_cb (struct evhttp_request *req, void *arg);
 void reg_cb (struct evhttp_request *req, void *arg);
 
 size_t deal_response_data(char *ptr, size_t size, size_t nmemb, void *userdata);
+
+char *get_random_uuid(char *str);
+char *create_sessionid(const char *isDriver, char *sessionid);
 
 #endif
