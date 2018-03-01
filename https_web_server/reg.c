@@ -145,8 +145,11 @@ reg_cb (struct evhttp_request *req, void *arg)
 	}
 
 
-	//TODO 创建session
+	//创建session
+	char sessionid[SESSION_ID_LEN] = {0};
+	create_sessionid(isDriver->valuestring, sessionid);
 
+	//TODO 存入data server
 
 	cJSON_Delete(root);
 	cJSON_Delete(rqst_dt);
@@ -158,6 +161,7 @@ reg_cb (struct evhttp_request *req, void *arg)
 	cJSON *response_jni = cJSON_CreateObject();
     if (is_reg_succ == 0) {
 		cJSON_AddStringToObject(response_jni, "result", "ok");
+		cJSON_AddStringToObject(response_jni, "sessionid", sessionid);
 	}
 	else {
 		cJSON_AddStringToObject(response_jni, "result", "error");
